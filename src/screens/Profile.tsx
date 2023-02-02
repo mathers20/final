@@ -1,47 +1,31 @@
-import React from "react";
-import{Button, ScrollView, Text,TextInput,View} from 'react-native';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, Text, Image,ScrollView, TouchableOpacity, FlatList, } from "react-native";
+import { StackActions, useNavigation } from "@react-navigation/native";
 import { styles } from "../theme/appTheme";
 
+    useEffect(()=>{
+      getMisPedidos()
+    }, [])  
+    const navig = useNavigation();
 
 export const Profile = () => {
   return (
     <ScrollView style={{flex:1, backgroundColor:"Grey"}}>
-        <View style={{paddingHorizontal: 30 }}>
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre Padre"
-            placeholderTextColor={'grey'}
-            autoCapitalize = 'none'
+        <View>
+          <Text style = {styles.textTitle}>USUARIO: XXXXX</Text>
+        </View>
+        <FlatList 
+          data={pedidos}
+          keyExtractor = {(_item,_index: any) => _index}
+          renderItem={({item} : any)=>(
+          <TouchableOpacity onPress={() => navig.dispatch(StackActions.push('ShopItem', { shop: item }))}>
+            <View style = {{flex: 1.5}}>
+              <Text style = {styles.textNombre}>{item.name}</Text>
+            </View>
+          </TouchableOpacity>
+          )}
           />
 
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre Madre"
-            placeholderTextColor={'grey'}
-            autoCapitalize = 'none'
-          />
-        
-          <Text>Padre vivo?</Text>
-          <Text>Madre viva?</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Nombre y apellido"
-            placeholderTextColor={'grey'}
-            autoCapitalize = 'none'
-          />
-          <Text>Fecha nac</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Lugar de nacimiento"
-            placeholderTextColor={'grey'}
-            autoCapitalize = 'none'
-          />
-        </View>
-        <View style={{paddingHorizontal: 30 , marginTop: 30}}>
-          <Button
-            title="Guardar"
-          />
-        </View>
     </ScrollView>
   );
 };

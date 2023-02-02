@@ -30,4 +30,11 @@ export const styles = StyleSheet.create({
 		backgroundColor: 'white',
 		flex: 1,
 	  },
+	  textTitle: {
+        fontFamily: 'Poppins-Regular',
+        fontSize: 30,
+        textAlign: 'center',
+        color: 'black',
+        marginTop: 5,
+    },
 });
