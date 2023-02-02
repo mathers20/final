@@ -2,6 +2,8 @@ import { StackScreenProps } from '@react-navigation/stack';
 import React, { useState } from 'react';
 import { styles } from '../theme/appTheme';
 import {Alert, Button, ScrollView, Text,TextInput,View} from 'react-native';
+import { addUserDB, clearAllStorage, getUserDB } from '../helpes';
+import { useNetInfo } from '@react-native-community/netinfo';
 
 interface Props extends StackScreenProps<any, any> {}
 
@@ -9,15 +11,25 @@ interface Props extends StackScreenProps<any, any> {}
 export const Login = ({navigation}:Props) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-
+	const netinfo = useNetInfo()
 	const login = async () => {
-		try {
-			const fetchApiCall = await fetch('url');
-			const response = fetchApiCall.json();
-			console.log(response);
+		const dataUsers = JSON.parse(await getUserDB());
+		if (dataUsers && dataUsers.find((item: any) => item.email === email && item.password === password)){
 			navigation.navigate('Profile');
-		} catch (error) {
-			Alert.alert('Error','Ha habido un error');
+			setEmail("")
+			setPassword("")
+		} else {
+			Alert.alert('Error de credenciales');
+		}
+	};
+
+	const signUp = () => {
+		if(email.length > 0 && password.length> 0){
+			addUserDB(email, password);
+			setEmail("")
+			setPassword("")
+		}else{
+			Alert.alert("Completa todos los campos")
 		}
 	};
 
@@ -44,15 +56,20 @@ export const Login = ({navigation}:Props) => {
 				/>
         </View>
         <View style ={styles.globalMargin}>
-          <View>
-            <Text>FALTA CHECKBOX</Text>
-          </View>
 
-			<Button
-				title="Login"
+		  <Button
+				title="Aceptar"
 				onPress={login}
 				/>
+				<Button
+				title="Registro"
+				onPress={signUp}
+				/>
     	</View>
+		<View>
+		<Text>{netinfo.isConnected ? "Estas conectado a internet" : "No tienes conexion a internet"}</Text>
+		<Text>Estas conectado mediante {netinfo.type}</Text>
+		</View>
       </View>
 	</ScrollView>
 
