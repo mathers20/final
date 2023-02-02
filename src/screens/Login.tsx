@@ -15,7 +15,7 @@ export const Login = ({navigation}:Props) => {
 	const login = async () => {
 		const dataUsers = JSON.parse(await getUserDB());
 		if (dataUsers && dataUsers.find((item: any) => item.email === email && item.password === password)){
-			navigation.navigate('Profile');
+			navigation.navigate('Profile', {email});
 			setEmail("")
 			setPassword("")
 		} else {
