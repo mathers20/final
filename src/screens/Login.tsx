@@ -8,7 +8,7 @@ interface Props extends StackScreenProps<any, any> {};
 
 export const Login = ({navigation}:Props) => {
   return (
-    <ScrollView style={{flex:1, backgroundColor:"white"}}>
+    <ScrollView style={{flex:1, backgroundColor:"Grey"}}>
 		<View >
 			<View style={{paddingHorizontal: 30 }}>
 				<TextInput
@@ -30,13 +30,13 @@ export const Login = ({navigation}:Props) => {
             <Text>FALTA CHECKBOX</Text>
           </View>
 		
-		<Button
-			title="Login"
-			onPress={() => navigation.navigate('Register')}
-			/>
-    </View>
+			<Button
+				title="Login"
+				onPress={() => navigation.navigate('Profile')}
+				/>
+    	</View>
       </View>
-		</ScrollView>
+	</ScrollView>
     
   );
 };
